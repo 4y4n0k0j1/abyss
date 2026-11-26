@@ -1,0 +1,11 @@
+.env
+*.key
+*.pem
+*secret*
+*token*
+
+# gen or and editor files
+.qmlls.ini
+*.log
+*.swp
+*~
