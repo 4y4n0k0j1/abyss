@@ -10,5 +10,10 @@
   "hoverScale": 1.2,
   "hoverCurve": 0.9,
   "animationMs": 550,
-  "pushWindows": false
+  "pushWindows": false,
+  "pillClockPx": 16,
+  "barClockPx": 30,
+  "barContentWidth": 64,
+  "colorMode": "fixed",
+  "accentColor": "#4da3ff"
 }

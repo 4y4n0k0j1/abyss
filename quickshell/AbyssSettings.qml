@@ -19,6 +19,11 @@ Singleton {
     property alias hoverCurve: adapter.hoverCurve
     property alias animationMs: adapter.animationMs
     property alias pushWindows: adapter.pushWindows
+    property alias pillClockPx: adapter.pillClockPx
+    property alias barClockPx: adapter.barClockPx
+    property alias barContentWidth: adapter.barContentWidth
+    property alias colorMode: adapter.colorMode
+    property alias accentColor: adapter.accentColor
 
     FileView {
         path: Quickshell.env("HOME") + "/.config/abyss/settings.json"
@@ -40,6 +45,11 @@ Singleton {
             property real hoverCurve: 0.9
             property int animationMs: 550
             property bool pushWindows: false
+            property int pillClockPx: 16
+            property int barClockPx: 30
+            property int barContentWidth: 64
+            property string colorMode: "fixed"
+            property string accentColor: "#4da3ff"
         }
     }
 }

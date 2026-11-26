@@ -59,6 +59,23 @@ ShellRoot {
                 barMix: island.expand
             }
 
+            ClockColumn {
+                anchors.centerIn: parent
+                timePx: AbyssSettings.pillClockPx
+                showDate: false
+                opacity: 1 - Math.min(1, island.expand * 3)
+                visible: opacity > 0
+            }
+
+            ClockColumn {
+                x: (AbyssSettings.barContentWidth - width) / 2
+                anchors.verticalCenter: parent.verticalCenter
+                timePx: AbyssSettings.barClockPx
+                showDate: true
+                opacity: Math.max(0, Math.min(1, (island.expand - 0.6) / 0.4))
+                visible: opacity > 0
+            }
+
             MouseArea {
                 id: mouse
                 anchors.fill: parent
