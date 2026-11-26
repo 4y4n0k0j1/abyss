@@ -15,5 +15,6 @@
   "barClockPx": 30,
   "barContentWidth": 64,
   "colorMode": "fixed",
-  "accentColor": "#4da3ff"
+  "accentColor": "#4da3ff",
+  "contentPadding": 4
 }

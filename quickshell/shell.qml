@@ -24,9 +24,10 @@ ShellRoot {
             }
         }
 
-        readonly property real barW: AbyssSettings.pillWidth * AbyssSettings.barWidthFactor
+        readonly property real basePillW: Math.round(Math.max(AbyssSettings.pillWidth, pillClock.timeWidth + 2 * (AbyssSettings.fadeWidth + AbyssSettings.contentPadding)))
+        readonly property real barW: Math.round(basePillW * AbyssSettings.barWidthFactor)
         readonly property real growth: 1 + (AbyssSettings.hoverScale - 1) * hover
-        readonly property real pillW: AbyssSettings.pillWidth * growth
+        readonly property real pillW: basePillW * growth
         readonly property real pillH: AbyssSettings.pillHeight * growth
 
         anchors {
@@ -60,6 +61,7 @@ ShellRoot {
             }
 
             ClockColumn {
+                id: pillClock
                 anchors.centerIn: parent
                 timePx: AbyssSettings.pillClockPx
                 showDate: false

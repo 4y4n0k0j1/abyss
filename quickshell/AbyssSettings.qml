@@ -24,6 +24,7 @@ Singleton {
     property alias barContentWidth: adapter.barContentWidth
     property alias colorMode: adapter.colorMode
     property alias accentColor: adapter.accentColor
+    property alias contentPadding: adapter.contentPadding
 
     FileView {
         path: Quickshell.env("HOME") + "/.config/abyss/settings.json"
@@ -50,6 +51,7 @@ Singleton {
             property int barContentWidth: 64
             property string colorMode: "fixed"
             property string accentColor: "#4da3ff"
+            property int contentPadding: 4
         }
     }
 }

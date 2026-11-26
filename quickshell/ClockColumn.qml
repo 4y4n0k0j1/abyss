@@ -7,15 +7,24 @@ ColumnLayout {
     property real timePx: 16
     property bool showDate: false
     readonly property real datePx: Math.max(9, timePx * 0.42)
+    readonly property int timeWeight: Font.DemiBold
+    readonly property real timeWidth: metrics.advanceWidth
 
     spacing: Math.round(timePx * 0.05)
+
+    TextMetrics {
+        id: metrics
+        text: "00"
+        font.pixelSize: root.timePx
+        font.weight: root.timeWeight
+    }
 
     Text {
         Layout.alignment: Qt.AlignHCenter
         text: Qt.formatDateTime(AbyssClock.now, "HH")
         color: Theme.text
         font.pixelSize: root.timePx
-        font.weight: Font.DemiBold
+        font.weight: root.timeWeight
     }
 
     Text {
@@ -23,7 +32,7 @@ ColumnLayout {
         text: Qt.formatDateTime(AbyssClock.now, "mm")
         color: Theme.text
         font.pixelSize: root.timePx
-        font.weight: Font.DemiBold
+        font.weight: root.timeWeight
     }
 
     Item {
