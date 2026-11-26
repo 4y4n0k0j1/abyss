@@ -1,6 +1,7 @@
 import Quickshell
 import Quickshell.Wayland
 import QtQuick
+import QtQuick.Layouts
 
 ShellRoot {
     PanelWindow {
@@ -60,22 +61,44 @@ ShellRoot {
                 barMix: island.expand
             }
 
-            ClockColumn {
-                id: pillClock
+            ColumnLayout {
+                id: pillContent
                 anchors.centerIn: parent
-                timePx: AbyssSettings.pillClockPx
-                showDate: false
+                spacing: AbyssSettings.contentGap
                 opacity: 1 - Math.min(1, island.expand * 3)
                 visible: opacity > 0
+
+                ClockColumn {
+                    id: pillClock
+                    Layout.alignment: Qt.AlignHCenter
+                    timePx: AbyssSettings.pillClockPx
+                    showDate: false
+                }
+
+                BatteryBar {
+                    Layout.alignment: Qt.AlignHCenter
+                    showPercent: false
+                }
             }
 
-            ClockColumn {
+            ColumnLayout {
+                id: barContent
                 x: (AbyssSettings.barContentWidth - width) / 2
                 anchors.verticalCenter: parent.verticalCenter
-                timePx: AbyssSettings.barClockPx
-                showDate: true
+                spacing: AbyssSettings.contentGap * 2
                 opacity: Math.max(0, Math.min(1, (island.expand - 0.6) / 0.4))
                 visible: opacity > 0
+
+                ClockColumn {
+                    Layout.alignment: Qt.AlignHCenter
+                    timePx: AbyssSettings.barClockPx
+                    showDate: true
+                }
+
+                BatteryBar {
+                    Layout.alignment: Qt.AlignHCenter
+                    showPercent: true
+                }
             }
 
             MouseArea {

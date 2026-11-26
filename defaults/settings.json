@@ -16,5 +16,11 @@
   "barContentWidth": 64,
   "colorMode": "fixed",
   "accentColor": "#4da3ff",
-  "contentPadding": 4
+  "contentPadding": 4,
+  "contentGap": 14,
+  "batteryLowPercent": 20,
+  "batteryCriticalPercent": 10,
+  "batteryPulse": true,
+  "batteryBarWidth": 6,
+  "batteryBarHeight": 56
 }

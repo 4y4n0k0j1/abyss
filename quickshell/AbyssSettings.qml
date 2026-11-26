@@ -25,6 +25,12 @@ Singleton {
     property alias colorMode: adapter.colorMode
     property alias accentColor: adapter.accentColor
     property alias contentPadding: adapter.contentPadding
+    property alias contentGap: adapter.contentGap
+    property alias batteryLowPercent: adapter.batteryLowPercent
+    property alias batteryCriticalPercent: adapter.batteryCriticalPercent
+    property alias batteryPulse: adapter.batteryPulse
+    property alias batteryBarWidth: adapter.batteryBarWidth
+    property alias batteryBarHeight: adapter.batteryBarHeight
 
     FileView {
         path: Quickshell.env("HOME") + "/.config/abyss/settings.json"
@@ -52,6 +58,12 @@ Singleton {
             property string colorMode: "fixed"
             property string accentColor: "#4da3ff"
             property int contentPadding: 4
+            property int contentGap: 14
+            property int batteryLowPercent: 20
+            property int batteryCriticalPercent: 10
+            property bool batteryPulse: true
+            property int batteryBarWidth: 6
+            property int batteryBarHeight: 56
         }
     }
 }
