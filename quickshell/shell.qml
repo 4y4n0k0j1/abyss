@@ -1,57 +1,71 @@
 import Quickshell
 import Quickshell.Wayland
 import QtQuick
-import QtQuick.Effects
 
 ShellRoot {
     PanelWindow {
         id: island
 
-        readonly property int pad: AbyssSettings.fadeWidth * 2
+        property bool pinned: false
 
-        anchors {
-            left: true
-        }
-        margins {
-            left: Math.max(0, AbyssSettings.edgeGap - pad)
-        }
-
-        implicitWidth: AbyssSettings.pillWidth + pad * 2
-        implicitHeight: AbyssSettings.pillHeight + pad * 2
-
-        color: "transparent"
-        exclusionMode: ExclusionMode.Ignore
-        WlrLayershell.namespace: "abyss-island"
-        mask: Region { item: hitbox }
-
-        Item {
-            id: hitbox
-            anchors.centerIn: parent
-            width: AbyssSettings.pillWidth
-            height: AbyssSettings.pillHeight
-        }
-
-        Item {
-            id: shape
-            anchors.fill: parent
-            visible: false
-
-            Rectangle {
-                anchors.centerIn: parent
-                width: AbyssSettings.pillWidth
-                height: AbyssSettings.pillHeight
-                radius: Math.min(width, height) / 2
-                color: "black"
+        property real expand: pinned ? 1.0 : 0.0
+        Behavior on expand {
+            NumberAnimation {
+                duration: AbyssSettings.animationMs
+                easing.type: Easing.InOutCubic
             }
         }
 
-        MultiEffect {
-            anchors.fill: parent
-            source: shape
-            blurEnabled: true
-            blurMax: 64
-            blur: Math.min(1, AbyssSettings.fadeWidth / 64)
-            opacity: AbyssSettings.opacity
+        property real hover: (mouse.containsMouse && !pinned) ? 1.0 : 0.0
+        Behavior on hover {
+            NumberAnimation {
+                duration: 250
+                easing.type: Easing.OutCubic
+            }
+        }
+
+        readonly property real barW: AbyssSettings.pillWidth * AbyssSettings.barWidthFactor
+        readonly property real growth: 1 + (AbyssSettings.hoverScale - 1) * hover
+        readonly property real pillW: AbyssSettings.pillWidth * growth
+        readonly property real pillH: AbyssSettings.pillHeight * growth
+
+        anchors {
+            left: true
+            top: true
+            bottom: true
+        }
+
+        implicitWidth: barW
+        color: "transparent"
+        exclusionMode: (AbyssSettings.pushWindows && pinned) ? ExclusionMode.Normal : ExclusionMode.Ignore
+        exclusiveZone: barW
+        WlrLayershell.namespace: "abyss-island"
+        mask: Region { item: shape }
+
+        Item {
+            id: shape
+
+            width: island.pillW + (island.barW - island.pillW) * island.expand
+            height: island.pillH + (island.height - island.pillH) * island.expand
+            x: AbyssSettings.edgeGap * (1 - island.expand)
+            y: (island.height - height) / 2
+
+            GradientPill {
+                anchors.fill: parent
+                fadeWidth: AbyssSettings.fadeWidth
+                curve: AbyssSettings.gradientCurve + (AbyssSettings.hoverCurve - AbyssSettings.gradientCurve) * island.hover
+                coreAlpha: AbyssSettings.coreOpacity
+                edgeAlpha: AbyssSettings.edgeOpacity
+                barMix: island.expand
+            }
+
+            MouseArea {
+                id: mouse
+                anchors.fill: parent
+                hoverEnabled: true
+                cursorShape: Qt.PointingHandCursor
+                onClicked: island.pinned = !island.pinned
+            }
         }
     }
 }

@@ -1,7 +1,14 @@
 {
-  "opacity": 0.6,
-  "fadeWidth": 24,
+  "fadeWidth": 12,
   "pillWidth": 40,
   "pillHeight": 280,
-  "edgeGap": 16
+  "edgeGap": 16,
+  "coreOpacity": 1.0,
+  "edgeOpacity": 0.0,
+  "gradientCurve": 1.4,
+  "barWidthFactor": 2.5,
+  "hoverScale": 1.2,
+  "hoverCurve": 0.9,
+  "animationMs": 550,
+  "pushWindows": false
 }
