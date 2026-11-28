@@ -1,9 +1,27 @@
 import Quickshell
 import Quickshell.Wayland
+import Quickshell.Io
 import QtQuick
 import QtQuick.Layouts
 
 ShellRoot {
+    // lets a mango keybind drive the bar: qs -c abyss ipc call island toggle
+    IpcHandler {
+        target: "island"
+
+        function toggle(): void {
+            island.pinned = !island.pinned
+        }
+
+        function open(): void {
+            island.pinned = true
+        }
+
+        function close(): void {
+            island.pinned = false
+        }
+    }
+
     PanelWindow {
         id: island
 
@@ -17,7 +35,7 @@ ShellRoot {
             }
         }
 
-        property real hover: (mouse.containsMouse && !pinned) ? 1.0 : 0.0
+        property real hover: (hoverTracker.hovered && !pinned) ? 1.0 : 0.0
         Behavior on hover {
             NumberAnimation {
                 duration: 250
@@ -26,6 +44,8 @@ ShellRoot {
         }
 
         readonly property real contentW: Math.max(pillClock.timeWidth, pillWeather.sampleWidth, AbyssSettings.pillIconPx)
+
+        // never narrower than the content plus both fade zones, so nothing overflows the solid core
         readonly property real basePillW: Math.round(Math.max(AbyssSettings.pillWidth, contentW + 2 * (AbyssSettings.fadeWidth + AbyssSettings.contentPadding)))
         readonly property real barW: Math.round(basePillW * AbyssSettings.barWidthFactor)
         readonly property real growth: 1 + (AbyssSettings.hoverScale - 1) * hover
@@ -43,6 +63,8 @@ ShellRoot {
         exclusionMode: (AbyssSettings.pushWindows && pinned) ? ExclusionMode.Normal : ExclusionMode.Ignore
         exclusiveZone: barW
         WlrLayershell.namespace: "abyss-island"
+
+        // only the visible shape takes mouse input, the rest of the window is click-through
         mask: Region { item: shape }
 
         Item {
@@ -62,6 +84,11 @@ ShellRoot {
                 barMix: island.expand
             }
 
+            // passive on purpose, so clicks still reach the clock and the icons
+            HoverHandler {
+                id: hoverTracker
+            }
+
             ColumnLayout {
                 id: pillContent
                 anchors.centerIn: parent
@@ -74,6 +101,7 @@ ShellRoot {
                     Layout.alignment: Qt.AlignHCenter
                     timePx: AbyssSettings.pillClockPx
                     showDate: false
+                    onClicked: island.pinned = !island.pinned
                 }
 
                 WeatherReadout {
@@ -103,6 +131,7 @@ ShellRoot {
                     Layout.alignment: Qt.AlignHCenter
                     timePx: AbyssSettings.barClockPx
                     showDate: true
+                    onClicked: island.pinned = !island.pinned
                 }
 
                 WeatherReadout {
@@ -119,14 +148,6 @@ ShellRoot {
                     iconPx: AbyssSettings.barIconPx
                     showPercent: true
                 }
-            }
-
-            MouseArea {
-                id: mouse
-                anchors.fill: parent
-                hoverEnabled: true
-                cursorShape: Qt.PointingHandCursor
-                onClicked: island.pinned = !island.pinned
             }
         }
     }
