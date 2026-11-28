@@ -25,7 +25,8 @@ ShellRoot {
             }
         }
 
-        readonly property real basePillW: Math.round(Math.max(AbyssSettings.pillWidth, pillClock.timeWidth + 2 * (AbyssSettings.fadeWidth + AbyssSettings.contentPadding)))
+        readonly property real contentW: Math.max(pillClock.timeWidth, pillWeather.sampleWidth, AbyssSettings.pillIconPx)
+        readonly property real basePillW: Math.round(Math.max(AbyssSettings.pillWidth, contentW + 2 * (AbyssSettings.fadeWidth + AbyssSettings.contentPadding)))
         readonly property real barW: Math.round(basePillW * AbyssSettings.barWidthFactor)
         readonly property real growth: 1 + (AbyssSettings.hoverScale - 1) * hover
         readonly property real pillW: basePillW * growth
@@ -75,8 +76,17 @@ ShellRoot {
                     showDate: false
                 }
 
-                BatteryBar {
+                WeatherReadout {
+                    id: pillWeather
                     Layout.alignment: Qt.AlignHCenter
+                    iconPx: AbyssSettings.pillIconPx
+                    showTemp: false
+                    showDetails: false
+                }
+
+                BatteryIcon {
+                    Layout.alignment: Qt.AlignHCenter
+                    iconPx: AbyssSettings.pillIconPx
                     showPercent: false
                 }
             }
@@ -95,8 +105,18 @@ ShellRoot {
                     showDate: true
                 }
 
-                BatteryBar {
+                WeatherReadout {
                     Layout.alignment: Qt.AlignHCenter
+                    iconPx: AbyssSettings.barIconPx
+                    showTemp: true
+                    tempPx: AbyssSettings.barWeatherPx
+                    showDetails: true
+                    detailWidth: AbyssSettings.barContentWidth - 8
+                }
+
+                BatteryIcon {
+                    Layout.alignment: Qt.AlignHCenter
+                    iconPx: AbyssSettings.barIconPx
                     showPercent: true
                 }
             }

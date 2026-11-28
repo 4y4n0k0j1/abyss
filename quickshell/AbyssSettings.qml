@@ -29,8 +29,17 @@ Singleton {
     property alias batteryLowPercent: adapter.batteryLowPercent
     property alias batteryCriticalPercent: adapter.batteryCriticalPercent
     property alias batteryPulse: adapter.batteryPulse
-    property alias batteryBarWidth: adapter.batteryBarWidth
-    property alias batteryBarHeight: adapter.batteryBarHeight
+    property alias locationQuery: adapter.locationQuery
+    property alias ipFallback: adapter.ipFallback
+    property alias temperatureUnit: adapter.temperatureUnit
+    property alias weatherRefreshMinutes: adapter.weatherRefreshMinutes
+    property alias barWeatherPx: adapter.barWeatherPx
+    property alias batteryFullPercent: adapter.batteryFullPercent
+    property alias batteryMediumPercent: adapter.batteryMediumPercent
+    property alias batteryChargePulse: adapter.batteryChargePulse
+    property alias pillIconPx: adapter.pillIconPx
+    property alias barIconPx: adapter.barIconPx
+    property alias batteryDebug: adapter.batteryDebug
 
     FileView {
         path: Quickshell.env("HOME") + "/.config/abyss/settings.json"
@@ -62,8 +71,17 @@ Singleton {
             property int batteryLowPercent: 20
             property int batteryCriticalPercent: 10
             property bool batteryPulse: true
-            property int batteryBarWidth: 6
-            property int batteryBarHeight: 56
+            property string locationQuery: "Lilongwe"
+            property bool ipFallback: true
+            property string temperatureUnit: "celsius"
+            property int weatherRefreshMinutes: 15
+            property int barWeatherPx: 26
+            property int batteryFullPercent: 60
+            property int batteryMediumPercent: 25
+            property bool batteryChargePulse: true
+            property int pillIconPx: 20
+            property int barIconPx: 26
+            property string batteryDebug: ""
         }
     }
 }

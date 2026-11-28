@@ -21,6 +21,15 @@
   "batteryLowPercent": 20,
   "batteryCriticalPercent": 10,
   "batteryPulse": true,
-  "batteryBarWidth": 6,
-  "batteryBarHeight": 56
+  "locationQuery": "Lilongwe",
+  "ipFallback": true,
+  "temperatureUnit": "celsius",
+  "weatherRefreshMinutes": 15,
+  "barWeatherPx": 26,
+  "batteryFullPercent": 60,
+  "batteryMediumPercent": 25,
+  "batteryChargePulse": true,
+  "pillIconPx": 20,
+  "barIconPx": 26,
+  "batteryDebug": ""
 }

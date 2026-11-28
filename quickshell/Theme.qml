@@ -5,6 +5,7 @@ import QtQuick
 
 Singleton {
     readonly property color text: "#f2f2f2"
+    readonly property color muted: Qt.rgba(1, 1, 1, 0.5)
     readonly property color danger: "#ff4d4d"
     readonly property color track: Qt.rgba(1, 1, 1, 0.16)
     readonly property color accent: AbyssSettings.colorMode === "dynamic" ? dynamicAccent : AbyssSettings.accentColor
