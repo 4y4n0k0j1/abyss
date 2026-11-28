@@ -31,5 +31,8 @@
   "batteryChargePulse": true,
   "pillIconPx": 20,
   "barIconPx": 26,
-  "batteryDebug": ""
+  "batteryDebug": "",
+  "iconGap": 12,
+  "capsulePadding": 6,
+  "capsuleOpacity": 0.08
 }

@@ -40,6 +40,9 @@ Singleton {
     property alias pillIconPx: adapter.pillIconPx
     property alias barIconPx: adapter.barIconPx
     property alias batteryDebug: adapter.batteryDebug
+    property alias iconGap: adapter.iconGap
+    property alias capsulePadding: adapter.capsulePadding
+    property alias capsuleOpacity: adapter.capsuleOpacity
 
     FileView {
         path: Quickshell.env("HOME") + "/.config/abyss/settings.json"
@@ -82,6 +85,9 @@ Singleton {
             property int pillIconPx: 20
             property int barIconPx: 26
             property string batteryDebug: ""
+            property int iconGap: 8
+            property int capsulePadding: 6
+            property real capsuleOpacity: 0.08
         }
     }
 }

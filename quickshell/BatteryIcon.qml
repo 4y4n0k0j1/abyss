@@ -9,7 +9,11 @@ ColumnLayout {
     property bool showPercent: false
     property real textPx: 13
 
+    signal clicked()
+
     readonly property var dev: UPower.displayDevice
+
+    // fake readings for testing, empty means use the real battery
     readonly property string mock: AbyssSettings.batteryDebug
     readonly property real realLevel: Math.max(0, Math.min(1, dev ? dev.percentage : 0))
     readonly property bool realCharging: dev ? dev.state === UPowerDeviceState.Charging : false
@@ -23,6 +27,8 @@ ColumnLayout {
     readonly property string iconName: level >= AbyssSettings.batteryFullPercent / 100 ? "battery-full" : (level >= AbyssSettings.batteryMediumPercent / 100 ? "battery-medium" : "battery-low")
 
     property real pulse: 1.0
+
+    // stays at 1 when not pulsing so the icon can never get stuck dim
     readonly property real glow: pulsing ? pulse : 1.0
 
     spacing: 6
@@ -43,12 +49,13 @@ ColumnLayout {
         }
     }
 
-    AbyssIcon {
+    StatusIcon {
         Layout.alignment: Qt.AlignHCenter
         name: root.iconName
         size: root.iconPx
         color: root.tone
         opacity: root.glow
+        onClicked: root.clicked()
     }
 
     Text {
