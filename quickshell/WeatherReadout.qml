@@ -15,6 +15,7 @@ ColumnLayout {
 
     spacing: Math.round(iconPx * 0.3)
 
+    // widest likely temperature, so the width does not change when the value does
     TextMetrics {
         id: metrics
         text: "-00°"
@@ -48,23 +49,5 @@ ColumnLayout {
         color: Theme.accent
         font.pixelSize: root.detailPx
         font.weight: Font.Medium
-    }
-
-    Text {
-        visible: root.showDetails && AbyssWeather.ready
-        Layout.alignment: Qt.AlignHCenter
-        text: "RAIN"
-        color: Theme.accent
-        font.pixelSize: root.detailPx
-        font.weight: Font.Medium
-    }
-
-    Text {
-        visible: root.showDetails && AbyssWeather.ready
-        Layout.alignment: Qt.AlignHCenter
-        text: AbyssWeather.rainChance + "%"
-        color: Theme.text
-        font.pixelSize: root.detailPx * 1.3
-        font.weight: Font.DemiBold
     }
 }

@@ -43,6 +43,7 @@ Singleton {
     property alias iconGap: adapter.iconGap
     property alias capsulePadding: adapter.capsulePadding
     property alias capsuleOpacity: adapter.capsuleOpacity
+    property alias capsuleRadius: adapter.capsuleRadius
 
     FileView {
         path: Quickshell.env("HOME") + "/.config/abyss/settings.json"
@@ -88,6 +89,7 @@ Singleton {
             property int iconGap: 8
             property int capsulePadding: 6
             property real capsuleOpacity: 0.08
+            property int capsuleRadius: 18
         }
     }
 }

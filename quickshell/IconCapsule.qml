@@ -15,7 +15,9 @@ Item {
 
     Rectangle {
         anchors.fill: parent
-        radius: Math.min(width, height) / 2
+
+        // a full pill when narrow, softer corners when wide so the corner icons stay inside the curve
+        radius: Math.min(AbyssSettings.capsuleRadius, Math.min(width, height) / 2)
         color: Theme.capsule
     }
 

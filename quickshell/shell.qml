@@ -43,13 +43,19 @@ ShellRoot {
             }
         }
 
-        readonly property real contentW: Math.max(pillClock.timeWidth, pillWeather.sampleWidth, pillCapsule.implicitWidth)
+        readonly property real contentW: Math.max(pillClock.timeWidth, pillWeather.sampleWidth, pillIcons.implicitWidth)
 
         // never smaller than the content plus both fade zones, so nothing overflows the solid core
         readonly property real fadeSpace: 2 * (AbyssSettings.fadeWidth + AbyssSettings.contentPadding)
         readonly property real basePillW: Math.round(Math.max(AbyssSettings.pillWidth, contentW + fadeSpace))
         readonly property real basePillH: Math.round(Math.max(AbyssSettings.pillHeight, pillContent.implicitHeight + fadeSpace))
-        readonly property real barW: Math.round(basePillW * AbyssSettings.barWidthFactor)
+
+        // the setting is a minimum, wider content such as the two icon columns widens the strip
+        readonly property real barContentW: Math.round(Math.max(AbyssSettings.barContentWidth, barContent.implicitWidth + 2 * AbyssSettings.contentPadding))
+
+        // the content strip may fill at most the darker half of the bar
+        readonly property real barW: Math.round(Math.max(basePillW * AbyssSettings.barWidthFactor, barContentW * 2))
+
         readonly property real growth: 1 + (AbyssSettings.hoverScale - 1) * hover
         readonly property real pillW: basePillW * growth
         readonly property real pillH: basePillH * growth
@@ -114,50 +120,17 @@ ShellRoot {
                     showDetails: false
                 }
 
-                // sound, network and bluetooth are fixed placeholders until each one is wired up
-                IconCapsule {
-                    id: pillCapsule
+                StatusIcons {
+                    id: pillIcons
                     Layout.alignment: Qt.AlignHCenter
-                    gap: AbyssSettings.iconGap
-                    padding: AbyssSettings.capsulePadding
-
-                    StatusIcon {
-                        Layout.alignment: Qt.AlignHCenter
-                        name: "volume-high"
-                        size: AbyssSettings.pillIconPx
-                    }
-
-                    StatusIcon {
-                        Layout.alignment: Qt.AlignHCenter
-                        name: "wifi-full"
-                        size: AbyssSettings.pillIconPx
-                    }
-
-                    StatusIcon {
-                        Layout.alignment: Qt.AlignHCenter
-                        name: "bluetooth"
-                        size: AbyssSettings.pillIconPx
-                    }
-
-                    BatteryIcon {
-                        Layout.alignment: Qt.AlignHCenter
-                        iconPx: AbyssSettings.pillIconPx
-                        showPercent: false
-                    }
-                }
-
-                // placeholder, the power menu comes later
-                StatusIcon {
-                    Layout.alignment: Qt.AlignHCenter
-                    name: "power-eco"
-                    color: Theme.danger
-                    size: AbyssSettings.pillIconPx
+                    wide: false
+                    iconPx: AbyssSettings.pillIconPx
                 }
             }
 
             ColumnLayout {
                 id: barContent
-                x: (AbyssSettings.barContentWidth - width) / 2
+                x: (island.barContentW - width) / 2
                 anchors.verticalCenter: parent.verticalCenter
                 spacing: AbyssSettings.contentGap * 2
                 opacity: Math.max(0, Math.min(1, (island.expand - 0.6) / 0.4))
@@ -179,10 +152,10 @@ ShellRoot {
                     detailWidth: AbyssSettings.barContentWidth - 8
                 }
 
-                BatteryIcon {
+                StatusIcons {
                     Layout.alignment: Qt.AlignHCenter
+                    wide: true
                     iconPx: AbyssSettings.barIconPx
-                    showPercent: true
                 }
             }
         }

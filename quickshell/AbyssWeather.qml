@@ -9,7 +9,6 @@ Singleton {
     property bool ready: false
     property real temperature: 0
     property int code: 0
-    property int rainChance: 0
     property string place: ""
     property bool isDay: true
 
@@ -133,7 +132,7 @@ Singleton {
         var url = "https://api.open-meteo.com/v1/forecast?latitude=" + lat.toFixed(2)
             + "&longitude=" + lon.toFixed(2)
             + "&current=temperature_2m,weather_code,is_day"
-            + "&daily=precipitation_probability_max&forecast_days=1&timezone=auto"
+            + "&timezone=auto"
             + "&temperature_unit=" + unit
         getJson(url,
             function (d) {
@@ -143,11 +142,9 @@ Singleton {
                     fail("unusable weather values")
                     return
                 }
-                var r = (d.daily && d.daily.precipitation_probability_max) ? Number(d.daily.precipitation_probability_max[0]) : 0
                 temperature = t
                 isDay = !(d.current && Number(d.current.is_day) === 0)
                 code = Math.max(0, Math.min(99, Math.round(c)))
-                rainChance = isFinite(r) ? Math.max(0, Math.min(100, Math.round(r))) : 0
                 ready = true
                 failures = 0
                 retry.interval = refreshMs()

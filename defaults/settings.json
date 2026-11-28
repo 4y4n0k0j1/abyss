@@ -34,5 +34,6 @@
   "batteryDebug": "",
   "iconGap": 12,
   "capsulePadding": 6,
-  "capsuleOpacity": 0.08
+  "capsuleOpacity": 0.08,
+  "capsuleRadius": 18
 }
